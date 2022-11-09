@@ -1,0 +1,13 @@
+version: "3"
+services:
+  nexus:
+    container_name: nexus-rm
+    image: sonatype/nexus3:3.41.1
+    volumes:
+      - "nexus-data:/nexus-data"
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    stop_grace_period: 1m30s
+volumes:
+  nexus-data:
