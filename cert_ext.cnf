@@ -17,8 +17,7 @@ CN  = test.devops.nsth
 [ server_cert ]
 basicConstraints = CA:FALSE
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid,issuer:always
-keyUsage = critical, digitalSignature, keyEncipherment
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 
