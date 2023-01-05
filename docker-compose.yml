@@ -6,7 +6,9 @@ services:
     volumes:
       - "nexus-data:/nexus-data"
     ports:
-      - "8081:8081"
+      - "8081:8081" # HTTP Port to access Nexus RM web GUI
+      - "8443:8443" # HTTPS Port to access Nexus RM web GUI
+      - "8888:8888" # Custom port exposed for accessing Nexus RM Docker repository
     restart: unless-stopped
     stop_grace_period: 1m30s
 volumes:
