@@ -1,0 +1,1 @@
+keytool -genkey -keyalg RSA -alias jetty -keystore keystore.jks -storepass password -validity 365 -keysize 2048 -dname "CN=test.devops.nsth,OU=NSTH DevSecOps Team,O=Netpoleon Thailand Co. Ltd.,L=Bangkok,ST=Bangkok,C=TH" -ext SAN=dns:test.devops.nsth
