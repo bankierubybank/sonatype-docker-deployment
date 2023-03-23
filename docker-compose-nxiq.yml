@@ -1,0 +1,23 @@
+version: "3"
+services:
+  nexus:
+    container_name: nexus-iq-server
+    image: sonatype/nexus-iq-server
+    volumes:
+      - "sonatype-work:/sonatype-work"
+      - "sonatype-logs:/var/log/nexus-iq-server"
+      # edit config.yml for https
+      - "sonatype-conf:/etc/nexus-iq-server/"
+      # place .keystore and cert file for https
+      - "sonatype-opt:/opt/sonatype/nexus-iq-server"
+    ports:
+      - "8070:8070"
+      - "8443:8443"
+      - "8071:8071"
+    restart: unless-stopped
+    stop_grace_period: 1m30s
+volumes:
+  sonatype-work:
+  sonatype-logs:
+  sonatype-conf:
+  sonatype-opt:
