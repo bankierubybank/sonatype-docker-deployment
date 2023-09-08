@@ -1,15 +1,45 @@
 version: "3"
 services:
-  nexus:
+  repository:
     container_name: nexus-rm
     image: registry-1.docker.io/sonatype/nexus3:3.60.0
     volumes:
-      - "nexus-data:/nexus-data"
+      # - ./repository-data:/nexus-data/ # Bind Mounts
+      - "nexus-data:/nexus-data" # Volume Mounts (Uncomment line 37-40 if used)
     ports:
       - "8081:8081" # HTTP Port to access Nexus RM web GUI
       - "8443:8443" # HTTPS Port to access Nexus RM web GUI
       - "8888:8888" # Custom port exposed for accessing Nexus RM Docker repository
     restart: unless-stopped
     stop_grace_period: 1m30s
+  iq:
+    container_name: nexus-iq-server
+    image: registry-1.docker.io/sonatype/nexus-iq-server:1.167.0
+    volumes:
+      - ./iq-work:/sonatype-work
+      - ./iq-logs:/var/log/nexus-iq-server
+      - ./iq-conf:/etc/nexus-iq-server
+      - ./iq-opt:/opt/sonatype/nexus-iq-server
+      # - "sonatype-work:/sonatype-work"
+      # - "sonatype-logs:/var/log/nexus-iq-server"
+      # # edit config.yml for https
+      # - "sonatype-conf:/etc/nexus-iq-server/"
+      # # place .keystore and cert file for https
+      # - "sonatype-opt:/opt/sonatype/nexus-iq-server"
+    ports:
+      - "8070:8070" # HTTP Port to access Nexus IQ web GUI
+      - "8443:8443" # HTTPS Port to access Nexus IQ web GUI
+      - "8071:8071"
+    restart: unless-stopped
+    stop_grace_period: 1m30s
+    depends_on:
+      - repository
 volumes:
-  nexus-data:
+  # Nexus RM Volume 
+  nexus-data: # (Uncomment line 8 if used)
+    name: repository-data
+#   # Nexus IQ Volumes
+#   sonatype-work:
+#   sonatype-logs:
+#   sonatype-conf:
+#   sonatype-opt:
